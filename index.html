@@ -12,7 +12,12 @@
     <div class="hero__overlay">
       <h1>Лучший сервер по майну</h1>
       <h2>Cozy Chonka Haven</h2>
-      <p id="server-address">play.superchonka.kz:25565</p>
+      <p class="copyable" data-text="superchonka.minecraft.io">
+        <span>superchonka.minecraft.io</span>
+        <svg class="copy-icon" viewBox="0 0 24 24" width="16" height="16">
+          <path fill="currentColor" d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
+        </svg>
+      </p>
       <a href="#about" class="btn">Подробнее</a>
     </div>
   </header>
@@ -20,21 +25,87 @@
   <main class="container" id="about">
     <section class="card">
       <h3>Что у нас</h3>
-      <p>Дружелюбное комьюнити, стабильный сервер, интересные ивенты и уютный мир для строительства. Заходи — будет тепло и весело!</p>
+      <p>Конченное комьюнити, самый не стабильный сервер, ивентов у нас нет и мир не уютный. Заходи — будет тепло и весело!</p>
+    </section>
+
+    <section class="card">
+      <h3>Модпак Cozyhaven</h3>
+      <p>Уютный модпак с фокусом на атмосферу и комфортную игру:</p>
+      <ul>
+        <li><strong>Декорации:</strong> Farmer's Delight, Supplementaries, Comforts</li>
+        <li><strong>Оптимизация:</strong> Sodium, Iris, Entity Culling</li>
+        <li><strong>Техника:</strong> Create, Immersive Engineering</li>
+        <li><strong>Исследования:</strong> Alex's Mobs, Explorer's Compass</li>
+        <li><strong>Кастомизация:</strong> JourneyMap, Xaero's World Map</li>
+      </ul>
     </section>
 
     <section class="card">
       <h3>Как подключиться</h3>
       <ol>
-        <li>Открой Minecraft → Multiplayer</li>
-        <li>Добавь сервер с адресом: <strong id="server-address-2">play.superchonka.kz:25565</strong></li>
-        <li>Заходи и наслаждайся!</li>
+        <li>Скачай модпак <strong>Cozyhaven</strong> с CurseForge/Modrinth</li>
+        <li>Запусти Minecraft Fabric 1.20.1 → Multiplayer</li>
+        <li>Добавь сервер с адресом: 
+          <strong class="copyable" data-text="superchonka.minecraft.io">
+            <span>superchonka.minecraft.io</span>
+            <svg class="copy-icon" viewBox="0 0 24 24" width="16" height="16">
+              <path fill="currentColor" d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/>
+            </svg>
+          </strong>
+        </li>
+        <li>Заходи и салам Хаке закинь да!</li>
       </ol>
     </section>
   </main>
 
   <footer class="footer">
-    <p>© Cozy Chonka Haven — SuperChonka | Контакт: <a href="mailto:admin@superchonka.kz">admin@superchonka.kz</a></p>
+    <p>© Cozy Chonka Haven — SuperChonka | Контакт: <a href="mailto:hisqvd@gmail.com">hisqvd@gmail.com</a></p>
   </footer>
+
+  <div id="notification" class="notification">Адрес скопирован!</div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const copyables = document.querySelectorAll('.copyable');
+      const notification = document.getElementById('notification');
+      
+      copyables.forEach(copyable => {
+        copyable.addEventListener('click', function() {
+          const textToCopy = this.getAttribute('data-text');
+          
+          navigator.clipboard.writeText(textToCopy).then(() => {
+            // Показываем уведомление
+            notification.classList.add('show');
+            
+            // Меняем иконку на галочку
+            const icon = this.querySelector('.copy-icon');
+            const originalPath = icon.innerHTML;
+            icon.innerHTML = '<path fill="currentColor" d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>';
+            
+            setTimeout(() => {
+              notification.classList.remove('show');
+              // Возвращаем оригинальную иконку
+              icon.innerHTML = originalPath;
+            }, 2000);
+          }).catch(err => {
+            console.error('Ошибка копирования: ', err);
+            // Fallback для старых браузеров
+            const textArea = document.createElement('textarea');
+            textArea.value = textToCopy;
+            document.body.appendChild(textArea);
+            textArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textArea);
+            
+            notification.textContent = 'Адрес скопирован!';
+            notification.classList.add('show');
+            setTimeout(() => {
+              notification.classList.remove('show');
+            }, 2000);
+          });
+        });
+      });
+    });
+  </script>
 </body>
 </html>
