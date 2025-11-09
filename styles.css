@@ -95,3 +95,34 @@ body{margin:0;background:var(--bg);color:var(--muted);-webkit-font-smoothing:ant
     transform: translateY(0);
   }
 }
+/* Плавный скроллинг для всей страницы */
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 20px; /* Отступ при скролле к якорям */
+}
+
+/* Улучшение производительности скролла */
+body {
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch; /* Для iOS */
+}
+
+/* Плавный скролл для элементов с прокруткой */
+.card, .container {
+  scroll-behavior: smooth;
+}
+
+/* Убирает рывки при скролле на некоторых устройствах */
+@media (prefers-reduced-motion: no-preference) {
+  * {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Для старых браузеров которые не поддерживают scroll-behavior */
+@supports not (scroll-behavior: smooth) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
